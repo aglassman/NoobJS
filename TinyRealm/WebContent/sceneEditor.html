@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Scene Editor</title>
+<link rel="stylesheet"
+	href="jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
+<script src="jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="jstree-v.pre1.0/jquery.jstree.js"></script>
+<script src="jquery-ui-1.10.3/ui/jquery.ui.core.js"></script>
+<script src="jquery-ui-1.10.3/ui/jquery.ui.widget.js"></script>
+<script src="jquery-ui-1.10.3/ui/jquery.ui.button.js"></script>
+<script src="jquery-ui-1.10.3/ui/jquery.ui.mouse.js"></script>
+<script src="jquery-ui-1.10.3/ui/jquery.ui.sortable.js"></script>
+<style>
+#sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	padding: 5px;
+}
+
+#sortable li {
+	margin: 0 5px 5px 5px;
+	padding: 5px;
+	font-size: 1em;
+	height: 1em;
+}
+
+-
+-html>body #sortable li {
+	height: 1.5em;
+	line-height: 1.2em;
+}
+
+.ui-state-highlight {
+	height: 1.5em;
+	line-height: 1.2em;
+}
+
+--
+.floatLeft div {
+	float: left;
+	border: solid;
+	border-width: 1px;
+	border-color: black;
+}
+
+.layers h4 {
+	margin: 5px;
+}
+
+body {
+	min-width: 520px;
+}
+
+.column-small {
+	width: 300px;
+	float: left;
+	padding-bottom: 100px;
+}
+
+.column-large {
+	width: 835px;
+	float: left;
+	padding-bottom: 100px;
+}
+
+.portlet {
+	margin: 0 1em 1em 0;
+}
+
+.portlet-header {
+	margin: 0.3em;
+	padding-bottom: 4px;
+	padding-left: 0.2em;
+}
+
+.portlet-header .ui-icon {
+	float: right;
+}
+
+.portlet-content {
+	padding: 0.4em;
+}
+
+.ui-sortable-placeholder {
+	border: 1px dotted black;
+	visibility: visible !important;
+	height: 50px !important;
+}
+
+.ui-sortable-placeholder * {
+	visibility: hidden;
+}
+
+#scene-controls {
+	margin-left: 10px;
+}
+
+#scene-controls .ui-button {
+	height: 25px;
+	width: 25px;
+}
+</style>
+
+</head>
+<body>
+
+	<div class="column column-small">
+
+		<div class="portlet">
+			<div class="portlet-header">Assets</div>
+			<div class="portlet-content">
+				<div id="assetTree"></div>
+			</div>
+		</div>
+
+		<div class="portlet">
+			<div class="portlet-header">Asset Preview</div>
+			<div class="portlet-content">
+				<div id="assetPreview"></div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+	<div class="column column-large">
+
+		<div class="portlet">
+			<div class="portlet-header">
+				<div id="scene-controls">
+					Scene
+					<button id="stop">stop animation</button>
+					<button id="play">start animation</button>
+				</div>
+			</div>
+			<div class="portlet-content">
+				<canvas id="sceneCanvas" width="800px" height="600px"></canvas>
+
+			</div>
+		</div>
+		<div class="portlet">
+			<div class="portlet-header">Debug</div>
+			<div class="portlet-content">
+				<canvas id="debugCanvas" width="800px" height="600px"></canvas>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="column column-small">
+		<div class="portlet">
+			<div class="portlet-header">Available Scenes</div>
+			<div class="portlet-content">
+				<div id="availableScenes">
+					<ul></ul>
+				</div>
+			</div>
+		</div>
+		<div class="portlet">
+			<div class="portlet-header">Layers</div>
+			<div class="portlet-content">
+				<div class="layers">
+					<ul id="sortable">
+						<li class="ui-state-default">Item 1</li>
+						<li class="ui-state-default">Item 2</li>
+						<li class="ui-state-default">Item 3</li>
+						<li class="ui-state-default">Item 4</li>
+						<li class="ui-state-default">Item 5</li>
+						<li class="ui-state-default">Item 6</li>
+						<li class="ui-state-default">Item 7</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript" src="js/AssetManager.js"></script>
+<script type="text/javascript" src="js/Sprite.js"></script>
+<script type="text/javascript" src="js/ObjectGraph.js"></script>
+<script type="text/javascript" src="js/Mouse.js"></script>
+<script type="text/javascript" src="js/Bootstrap2d.js"></script>
+<script type="text/javascript" src="js/Scene.js"></script>
+<script type="text/javascript" src="test-scenes/rpg.js"></script>
+<script type="text/javascript" src="js/Editor.js"></script>
+
+</html>

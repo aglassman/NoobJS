@@ -1,0 +1,4 @@
+NoobJS.GameState = function()
+{
+
+};

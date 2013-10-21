@@ -1,13 +1,14 @@
-var Scene = Scene || {};
-
-Scene = function (name,assetsToLoad,sceneGraph) {
-	this.name = name;
+NoobJS.Scene = function (sceneName,assetsToLoad) {
+	this.sceneName = sceneName;
 	this.assetsToLoad = assetsToLoad;
-	this.sceneGraph = sceneGraph;
 };
 
-var SceneManager = function() {
+NoobJS.SceneManager = function() {
 	this.scenes = [];
 };
 
-SceneManager = new SceneManager();
+NoobJS.Asset = function(name,src,type) {
+	this.name = name;
+	this.src = src;
+	this.type = type;
+};

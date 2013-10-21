@@ -1,18 +1,12 @@
 
 
-SceneManager.scenes.push((function(){ 
+var sceneToLoad = ((function(){ 
 	var toLoad = new Array();
-	toLoad[0] = new Object();
-	toLoad[0].name = "items";
-	toLoad[0].src = "img/items.png";
 	
-	toLoad[1] = new Object();
-	toLoad[1].name = "chars";
-	toLoad[1].src = "img/chars.png";
-	
-	var sceneGraph = {};
-	
-	return new Scene("rpg test 1",toLoad,sceneGraph);})());
+	toLoad.push(new NoobJS.Asset("items", "img/items.png", "image/png"));
+	toLoad.push(new NoobJS.Asset("chars", "img/chars.png", "image/png"));
+
+	return new NoobJS.Scene("RPG-Test-Scene",toLoad);})());
 
 
 

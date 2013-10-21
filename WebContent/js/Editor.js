@@ -1,8 +1,6 @@
-var Editor = Editor || {};
-
-Editor = function() {
+NoobJS.Editor = function() {
 	
-	this.bootstrap = new Bootstrap2d(["sceneCanvas"]);
+	this.bootstrap = new NoobJS.Bootstrap2d(["sceneCanvas"]);
 	
 	this.buildAssetTree = function()
 	{
@@ -10,14 +8,14 @@ Editor = function() {
 		$("#assetTree").bind("select_node.jstree", function(event, data) {
 			$("#assetPreview").empty();
 			var key = data.args[0].id;
-			Editor.bootstrap.assetManager.assets[key].style.width = "100%";
-		    $("#assetPreview").append(Editor.bootstrap.assetManager.assets[key]);
+			NoobJS.Bootstrap2d.instance.assetManager.assets[key].style.width = "100%";
+		    $("#assetPreview").append(NoobJS.Bootstrap2d.instance.assetManager.assets[key]);
 		});
 
 
 		$("#assetTree").empty();
 		$("<ul/>").appendTo("#assetTree");
-		Object.keys(Editor.bootstrap.assetManager.assets).forEach(function(key,index,array){
+		Object.keys(this.bootstrap.assetManager.assets).forEach(function(key,index,array){
 			var string = "<li><a id='"+key+"'>" + key + "</a></li>";
 			$("#assetTree ul").append(string);
 		});
@@ -47,7 +45,7 @@ Editor = function() {
 window.onload = 
 $(function() {
 	
-		Editor = new Editor();
+		var myEditor = new NoobJS.Editor();
 		$( "#sortable" ).sortable({
 			placeholder: "ui-state-highlight"
 		});
@@ -75,12 +73,14 @@ $(function() {
 		$( ".column" ).disableSelection();
 
 		/* Find Available Scenes */
-		for(var i = 0; i < SceneManager.scenes.length; i++)
+		for(var i = 0; i < myEditor.bootstrap.sceneManager.scenes.length; i++)
 		{
-			$("#availableScenes ul").append("<li><a id='myscene' href=''>"+SceneManager.scenes[i].name+"</a></li>");
-			$("#myscene").on('click',function(e){
+			var scene = myEditor.bootstrap.sceneManager.scenes[i];
+			var sceneName = myEditor.bootstrap.sceneManager.scenes[i].sceneName;
+			$("#availableScenes ul").append("<li><a id='"+sceneName+"' href=''>"+sceneName+"</a></li>");
+			$("#"+sceneName).on('click',function(e){
 				e.preventDefault();
-				Editor.loadScene(SceneManager.scenes[0]);
+				myEditor.loadScene(scene);
 				return false;
 			});
 		}
@@ -92,7 +92,7 @@ $(function() {
 		    primary: "ui-icon-play"
 		  }
 		}).click(function(){
-			Editor.bootstrap.startAnimation();
+			myEditor.bootstrap.startAnimation();
 		});
 		$( "#stop" ).button({
 			  text: false,
@@ -100,7 +100,7 @@ $(function() {
 			    primary: "ui-icon-stop"
 			  }
 			}).click(function(){
-				Editor.bootstrap.stopAnimation();
+				myEditor.bootstrap.stopAnimation();
 			});
 		
 		

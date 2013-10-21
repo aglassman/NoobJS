@@ -1,6 +1,4 @@
-var AssetManager = AssetManager || {};
-
-AssetManager.AssetManager = function(assetsToLoad)
+NoobJS.AssetManager = function(assetsToLoad)
 {
 	this.initLoadCount = 0;
 	this.loadingString = "";
@@ -11,7 +9,7 @@ AssetManager.AssetManager = function(assetsToLoad)
 	{
 		this.loadedAssets++;
 		this.loadingString = this.loadedAssets + " / " + this.initLoadCount;
-	}
+	};
 	
 	this.loadImageAsset = function(name,src)
 	{
@@ -19,17 +17,17 @@ AssetManager.AssetManager = function(assetsToLoad)
 		this.assets[name] = img;
 		img.onload = this.incrementLoaded();
 		img.src = src;
-	}
+	};
 
 	this.getImageAsset = function(name)
 	{
 		return this.assets[name];
-	}
+	};
 	
 	this.initialLoadComplete = function()
 	{
 		return this.loadedAssets == this.initLoadCount;
-	}
+	};
 	
 	
 	this.loadAssets = function(toLoad)
@@ -48,11 +46,11 @@ AssetManager.AssetManager = function(assetsToLoad)
 		{
 			this.loadImageAsset(toLoad[i].name,toLoad[i].src);
 		}
-	}
+	};
 	
 	if(!(assetsToLoad === undefined))
 	{
 		this.loadAssets(assetsToLoad);
-	}
+	};
 	
-}
+};

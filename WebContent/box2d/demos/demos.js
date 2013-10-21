@@ -5,6 +5,7 @@ var canvasWidth;
 var canvasHeight;
 var canvasTop;
 var canvasLeft;
+var timeoutId;
 
 function setupWorld(did) {
 	if (!did) did = 0;
@@ -23,8 +24,18 @@ function step(cnt) {
 	world.Step(timeStep, iteration);
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 	drawWorld(world, ctx);
-	setTimeout('step(' + (cnt || 0) + ')', 10);
 }
+
+function start()
+{
+	timeoutId = setInterval(step, 1/60);
+}
+
+function stop()
+{
+	clearInterval(timeoutId);
+}
+
 Event.observe(window, 'load', function() {
 	setupWorld();
 	ctx = $('canvas').getContext('2d');

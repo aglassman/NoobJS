@@ -1,16 +1,6 @@
-var ObjectGraph = ObjectGraph || {};
+NoobJS.ObjectGraph = {};
 
-ObjectGraph.Node = function(name)
-{
-	this.id;
-	this.name = name;
-	this.parent;
-	this.children = Array();
-	this.process = true;
-};
-
-ObjectGraph.ObjectGraph = function () {
-	
+NoobJS.ObjectGraph = function () {
 	this.objectMap = {};
 	this.idCounter = -1;
 
@@ -56,7 +46,7 @@ ObjectGraph.ObjectGraph = function () {
 		this.attachToNode('root',node);
 	};
 
-	this.root = new ObjectGraph.Node('root');
+	this.root = new NoobJS.ObjectGraph.Node('root');
 	this.registerNode(this.root);
 
 	this.traverseFromRootWithCallback = function(callback)
@@ -74,20 +64,29 @@ ObjectGraph.ObjectGraph = function () {
 	};
 };
 
-ObjectGraph.test = function()
+NoobJS.ObjectGraph.Node = function(name)
 {
-	var og = new ObjectGraph.ObjectGraph();
-	og.attachToRoot(new ObjectGraph.Node('myNode0'));
-	og.attachToRoot(new ObjectGraph.Node('myNode1'));
+	this.id;
+	this.name = name;
+	this.parent;
+	this.children = Array();
+	this.process = true;
+};
+
+NoobJS.ObjectGraph.test = function()
+{
+	var og = new NoobJS.ObjectGraph();
+	og.attachToRoot(new NoobJS.ObjectGraph.Node('myNode0'));
+	og.attachToRoot(new NoobJS.ObjectGraph.Node('myNode1'));
 	var node2 = new Node('myNode2');
 	og.attachToRoot(node2);
-	og.attachToRoot(new ObjectGraph.Node('myNode3'));
-	og.attachToRoot(new ObjectGraph.Node('myNode4'));
+	og.attachToRoot(new NoobJS.ObjectGraph.Node('myNode3'));
+	og.attachToRoot(new NoobJS.ObjectGraph.Node('myNode4'));
 
 	
-	node2.children.push(new ObjectGraph.Node('woot!'));
-	node2.children.push(new ObjectGraph.Node('woot!'));
-	node2.children.push(new ObjectGraph.Node('woot!'));
+	node2.children.push(new NoobJS.ObjectGraph.Node('woot!'));
+	node2.children.push(new NoobJS.ObjectGraph.Node('woot!'));
+	node2.children.push(new NoobJS.ObjectGraph.Node('woot!'));
 
 	og.traverseFromRootWithCallback(function(node){console.log('processing: ' + node.name);});
 

@@ -1,4 +1,4 @@
-function SpriteSheet(image,spritew,spriteh,numx,numy)
+NoobJS.SpriteSheet = function (image,spritew,spriteh,numx,numy)
 {
 	this.image = image;
 	this.spritew = spritew;
@@ -6,24 +6,23 @@ function SpriteSheet(image,spritew,spriteh,numx,numy)
 	this.numx = numx;
 	this.numy = numy;
 
-	this.getItem = function(index)
-	{
-		var positionArray = new Array(8);
-		positionArray[0] = (index % numx) * this.spritew; //sx
-		positionArray[1] = Math.floor(index / numy) * this.spriteh; //sy
-		positionArray[2] = this.spritew; //sw
-		positionArray[3] = this.spriteh; //sh
-		positionArray[4] = 0; //dx
-		positionArray[5] = 0; //dy
-		positionArray[6] = this.spritew; //dw
-		positionArray[7] = this.spriteh; //dh
-		return positionArray;
-	}
+};
 
+NoobJS.SpriteSheet.prototype.getItem = function(index)
+{
+	var positionArray = new Array(8);
+	positionArray[0] = (index % this.numx) * this.spritew; //sx
+	positionArray[1] = Math.floor(index / this.numy) * this.spriteh; //sy
+	positionArray[2] = this.spritew; //sw
+	positionArray[3] = this.spriteh; //sh
+	positionArray[4] = 0; //dx
+	positionArray[5] = 0; //dy
+	positionArray[6] = this.spritew; //dw
+	positionArray[7] = this.spriteh; //dh
+	return positionArray;
+};
 
-}
-
-function drawImage(ctx,img,posArray,sx,sy,tx,ty,r,centered)
+NoobJS.SpriteSheet.prototype.drawImage = function (ctx,img,posArray,sx,sy,tx,ty,r,centered)
 {
 	ctx.save();
 	if(centered)
@@ -31,8 +30,9 @@ function drawImage(ctx,img,posArray,sx,sy,tx,ty,r,centered)
 		posArray[4]=posArray[6]/-2;
 		posArray[5]=posArray[7]/-2;
 	}
-	ctx.scale(sx,sy);
 	ctx.translate(tx,ty);
+	ctx.scale(sx,sy);
+	
 	ctx.rotate(r);
 	
 	ctx.drawImage(
@@ -47,13 +47,29 @@ function drawImage(ctx,img,posArray,sx,sy,tx,ty,r,centered)
 			posArray[7]);
 	
 	ctx.restore();
-}
+};
 
-function drawSprite(ctx,spriteSheet,index,sx,sy,tx,ty,r,centered)
+NoobJS.SpriteSheet.prototype.drawSprite = function(ctx,spriteSheet,index,sx,sy,tx,ty,r,centered)
 {
-	drawImage(
+	this.drawImage(
 		ctx,
-		spriteSheet.image,
-		spriteSheet.getItem(index),
+		this.image,
+		this.getItem(index),
 		sx,sy,tx,ty,r,centered);
-}
+};
+
+NoobJS.Sprite = function(spriteSheet,index)
+{
+	this.spriteSheet = spriteSheet;
+	this.index = index;
+};
+
+NoobJS.Sprite.prototype.drawSprite = function(ctx,sx,sy,tx,ty,r,centered)
+{
+	var index = this.index;
+	this.spriteSheet.drawImage(
+			ctx,
+			this.spriteSheet.image,
+			this.spriteSheet.getItem(index),
+			sx,sy,tx,ty,r,centered);
+};

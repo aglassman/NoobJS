@@ -4,10 +4,10 @@
   window.requestAnimationFrame = requestAnimationFrame;
 })();
 
-var Bootstrap2d = Bootstrap2d || {};
-
-Bootstrap2d = function(canvasIds) {
-	Bootstrap2d.instance = this;
+NoobJS.Bootstrap2d = function(canvasIds,gameLoop,smoothingEnabled) {
+	
+	NoobJS.Bootstrap2d.instance = this;
+	this.smoothingEnabled = smoothingEnabled;
 	this.canvasIds = canvasIds;
 	this.canvases = {};
 	this.paused = true;
@@ -18,13 +18,19 @@ Bootstrap2d = function(canvasIds) {
 				.getElementById(canvasIds[i]);
 		this.canvases[canvasIds[i]].ctx = this.canvases[canvasIds[i]].canvas
 				.getContext("2d");
-		this.canvases[canvasIds[i]].ctx.imageSmoothingEnabled = false;
-	}
-	;
+		this.canvases[canvasIds[i]].ctx.imageSmoothingEnabled = this.smoothingEnabled;
+	};
+	
+	this.toggleSmoothing = function()
+	{
+		for (var i = 0; i < canvasIds.length; i++) {
+			this.canvases[canvasIds[i]].ctx.imageSmoothingEnabled = !this.canvases[canvasIds[i]].ctx.imageSmoothingEnabled;
+		}
+	};
 
-	this.assetManager = new AssetManager.AssetManager();
+	this.assetManager = new NoobJS.AssetManager();
 
-	this.objectGraph = new ObjectGraph.ObjectGraph();
+	this.objectGraph = new NoobJS.ObjectGraph();
 
 	this.drawRect = function(ctx, w, h) {
 		ctx.save();
@@ -40,11 +46,9 @@ Bootstrap2d = function(canvasIds) {
 		ctx.restore();
 	};
 
-	this.gameLoop = function() {
-		
-	};
+	this.gameLoop = gameLoop;
 
-	this.animate = function() {
+	this.animate = function(elapsed) {
 		var ctx = this.canvases[this.canvasIds[0]].ctx;
 		var canvas = this.canvases[this.canvasIds[0]].canvas;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -75,11 +79,14 @@ Bootstrap2d = function(canvasIds) {
 	
 	this.startAnimation = function (){
 		this.paused = false;
-		
-		(function loop(){
-			Bootstrap2d.instance.gameLoop();
-			Bootstrap2d.instance.animate();
-			if(!Bootstrap2d.instance.paused)
+				
+		(function loop(elapsed){
+
+
+			NoobJS.Bootstrap2d.instance.gameLoop(elapsed);
+			NoobJS.Bootstrap2d.instance.animate(elapsed);
+			
+			if(!NoobJS.Bootstrap2d.instance.paused)
 				requestAnimationFrame(loop);
 		})();
 	};

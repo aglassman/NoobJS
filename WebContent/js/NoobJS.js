@@ -14,6 +14,12 @@ NoobJS.prototype.createCanvas = function(gameId,w,h)
 	document.body.appendChild(canvas);
 };
 
+NoobJS.prototype.setGravity = function(gravX,gravY)
+{
+	this.gravX = gravX;
+	this.gravY = gravY;
+}
+
 NoobJS.prototype.init = function(gameId,canvasw,canvash)
 {
 	var gameLoop = function(elapsed){};
@@ -23,7 +29,9 @@ NoobJS.prototype.init = function(gameId,canvasw,canvash)
 
 	if(this.useBox2d)
 	{
-		this.noobBox2d = new NoobJS.NoobBox2d();
+		var gravX = this.gravX || 0;
+		var gravY = this.gravY || 0;
+		this.noobBox2d = new NoobJS.NoobBox2d(gravX,gravY);
 		this.bootstrap.world = this.noobBox2d.world;
 		this.bootstrap.gameLoop = this.noobBox2d.gameLoop;
 	}

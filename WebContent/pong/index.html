@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Test Game</title>
-<!-- box2djs -->
+<title>Pong</title>
 		<script type="text/javascript" src="/box2d/lib/prototype-1.6.0.2.js"></script>
         <script src='/box2d/js/box2d/common/b2Settings.js'></script>
         <script src='/box2d/js/box2d/common/math/b2Vec2.js'></script>
@@ -77,13 +76,14 @@
 		<script type="text/javascript" src="/js/Mouse.js"></script>
 		<script type="text/javascript" src="/js/Bootstrap2d.js"></script>
 		<script type="text/javascript" src="/js/Scene.js"></script>
-
-<style>
- body {background-color:gray;}
-</style>
 </head>
 <body>
-</body>
 
-<script type="text/javascript" src="js/game.js"></script>
+</body>
+	<script type="text/javascript" src="/pong/objects/entities/wall.js"></script>
+	<script type="text/javascript" src="/pong/objects/entities/paddle.js"></script>
+	<script type="text/javascript" src="/pong/objects/entities/ball.js"></script>
+	<script type="text/javascript" src="/pong/objects/draw/draw.js"></script>
+	<script type="text/javascript" src="/pong/objects/update/update.js"></script>
+	<script type="text/javascript" src="/pong/pong.js"></script>
 </html>

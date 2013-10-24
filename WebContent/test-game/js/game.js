@@ -6,7 +6,12 @@ var circle;
 DSprite = function(name,sprite,initx,inity,radius){
 	NoobJS.ObjectGraph.Node(name);
 	this.sprite = sprite;
-	this.box2dObj = Game.noobBox2d.createBoxfunction(initx, inity, radius, radius, false);
+	
+	if(Math.random() > .5)
+		this.box2dObj = Game.noobBox2d.createCircleBody(initx, inity, radius);
+	else
+		this.box2dObj = Game.noobBox2d.createBoxfunction(initx, inity, radius, radius, false);
+	
 	this.draw = function(ctx)
 	{
 		var size = 1;
@@ -14,7 +19,7 @@ DSprite = function(name,sprite,initx,inity,radius){
 		var y = this.box2dObj.GetCenterPosition().y;
 		var r = this.box2dObj.GetRotation();
 		this.sprite.drawSprite(ctx,size,size,x,y,r,true,radius,radius);
-		//drawBox(ctx,this.box2dObj);
+		drawBox(ctx,this.box2dObj);
 	};
 };
 DSprite.prototype = new NoobJS.ObjectGraph.Node();
@@ -104,7 +109,7 @@ window.onload = new function()
 	
 	var width = 10;
 	
-	setInterval(function(){Game.bootstrap.objectGraph.attachToRoot(new DSprite("node2",new NoobJS.Sprite(items,getRandom(256)),150,0,width));},500);	
+	setInterval(function(){Game.bootstrap.objectGraph.attachToRoot(new DSprite("node2",new NoobJS.Sprite(items,getRandom(256)),150+(Math.random()),0,width));},500);	
 	
 	Game.noobBox2d.createGround(0,300,800,20);
 	//circle = Game.noobBox2d.createCircleBody(20, 20, 10);

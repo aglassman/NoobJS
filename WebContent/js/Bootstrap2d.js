@@ -32,27 +32,12 @@ NoobJS.Bootstrap2d = function(canvasIds,gameLoop,smoothingEnabled) {
 
 	this.objectGraph = new NoobJS.ObjectGraph();
 
-	this.drawRect = function(ctx, w, h) {
-		ctx.save();
-
-		ctx.translate(0, 0);
-		ctx.rotate(0);
-		ctx.translate(0, 0);
-		ctx.beginPath();
-		ctx.rect(0, 0, w, h);
-		ctx.fillStyle = "black";
-		ctx.fill();
-
-		ctx.restore();
-	};
-
 	this.gameLoop = gameLoop;
 
 	this.animate = function(elapsed) {
 		var ctx = this.canvases[this.canvasIds[0]].ctx;
 		var canvas = this.canvases[this.canvasIds[0]].canvas;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		this.drawRect(ctx, canvas.width, canvas.height);
 		if (!this.assetManager.initialLoadComplete()) {
 			ctx.font = "30px Arial";
 			ctx.fillStyle = "white";

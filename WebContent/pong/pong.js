@@ -39,4 +39,9 @@ window.onload = function()
 	Game.noobJS.start();
 	
 	Game.ball.setLinearVelocity(200, 200);
+
+	this.addEventListener('mousemove', function(event){
+		paddle1.y = event.screenY;
+		paddle1.updatePaddle();
+	})
 };

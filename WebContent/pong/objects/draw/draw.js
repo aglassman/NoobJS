@@ -23,7 +23,6 @@ Game.Paddle.prototype.draw = function(ctx)
         ctx.stroke();
 	}
 	ctx.restore();
-        
 };
 
 Game.Wall.prototype.draw = Game.Paddle.prototype.draw;

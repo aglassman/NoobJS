@@ -7,10 +7,7 @@ DSprite = function(name,sprite,initx,inity,radius){
 	NoobJS.ObjectGraph.Node(name);
 	this.sprite = sprite;
 	
-	if(Math.random() > .5)
-		this.box2dObj = Game.noobBox2d.createCircleBody(initx, inity, radius);
-	else
-		this.box2dObj = Game.noobBox2d.createBoxfunction(initx, inity, radius, radius, false);
+	this.box2dObj = Game.noobBox2d.createBoxfunction(initx, inity, radius, radius, false);
 	
 	this.draw = function(ctx)
 	{
@@ -19,7 +16,6 @@ DSprite = function(name,sprite,initx,inity,radius){
 		var y = this.box2dObj.GetCenterPosition().y;
 		var r = this.box2dObj.GetRotation();
 		this.sprite.drawSprite(ctx,size,size,x,y,r,true,radius,radius);
-		drawBox(ctx,this.box2dObj);
 	};
 };
 DSprite.prototype = new NoobJS.ObjectGraph.Node();
@@ -38,7 +34,7 @@ window.onload = new function()
 
 		return new NoobJS.Scene("RPG-Test-Scene",toLoad);})());
 	
-	
+	Game.setGravity(0, 300);
 	Game.init("testGame", 400, 400);
 	
 	Game.bootstrap.assetManager.loadAssets(toLoad);
@@ -111,38 +107,9 @@ window.onload = new function()
 	
 	setInterval(function(){Game.bootstrap.objectGraph.attachToRoot(new DSprite("node2",new NoobJS.Sprite(items,getRandom(256)),150+(Math.random()),0,width));},500);	
 	
-	Game.noobBox2d.createGround(0,300,800,20);
+	Game.noobBox2d.createSolidBox(0,300,800,20);
 	//circle = Game.noobBox2d.createCircleBody(20, 20, 10);
 	
 	Game.start();
 };
 
-function drawBox(ctx,box2dObj){
-	 
-	for (var s = box2dObj.GetShapeList(); s != null; s = s.GetNext()) {
-
-        switch (s.m_type) {
-            case b2Shape.e_circleShape:
-            {
-                drawPerson(ctx,s.m_position.x,s.m_position.y,s.m_body.m_rotation);
-                break;
-            }
-            case b2Shape.e_polyShape:
-            {
-                var poly = s;
-                var tV = b2Math.AddVV(poly.m_position, b2Math.b2MulMV(poly.m_R, poly.m_vertices[0]));
-                ctx.moveTo(tV.x, tV.y);
-                for (var i = 0; i < poly.m_vertexCount; i++) {
-                    var v = b2Math.AddVV(poly.m_position, b2Math.b2MulMV(poly.m_R, poly.m_vertices[i]));
-                    ctx.lineTo(v.x, v.y);
-                }
-                ctx.lineTo(tV.x, tV.y);
-                ctx.strokeStyle = "blue";
-                ctx.lineWidth = 2;
-                //ctx.fill();
-                ctx.stroke();
-                break;
-            }
-        }
-	}
-}
